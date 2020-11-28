@@ -10,18 +10,12 @@ def InicializaMatriz (n):
         M.append(linha)
     return M
 
-def CriaMatriz_L (n):
-    M = []
-    linha = []
-    for i in range (n):
-        linha = []
-        for j in range (n):
+def PreencherDiagonalPrincipalCom1s (M):
+    for i in range (len(M)):
+        for j in range (len(M)):
             if i == j :
-                linha.append(1)
-            else:
-                linha.append(0)
-        M.append(linha)
-    return M
+                M[i][j] = 1
+    return
 
 def TorcarLinhas (M, l1, l2):
     temp = M [l1]
@@ -61,17 +55,18 @@ def LU (A,B):
             for j in range (len(A)):            # zerando/operando sobre uma linha
                 print('calculando : ', A[i+1+c][j], '- (', coef, ') * ', A[c][j], ' = ', A[i+1+c][j] - coef * A[c][j])
                 A[i+1+c][j] = A[i+1+c][j] - coef * A[c][j]
-            
-        print('matriz a ')
-        pp.pprint(A)
-        print('matriz l ')
-        pp.pprint(L)
-        print('matriz b ')
-        pp.pprint(B)
+
         
  
 
-        
+    PreencherDiagonalPrincipalCom1s(L)
+    
+    print('matriz a ')
+    pp.pprint(A)
+    print('matriz l ')
+    pp.pprint(L)
+    print('matriz b ')
+    pp.pprint(B)
     
     return
         
