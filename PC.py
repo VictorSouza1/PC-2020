@@ -32,7 +32,7 @@ def TorcarLinhas (M, l1, l2):
 
 def LU (A,B):
     pp = pprint.PrettyPrinter()
-    L = CriaMatriz_L(len(A))
+    L = InicializaMatriz(len(A))
 
 
     pp.pprint(A)
@@ -50,7 +50,8 @@ def LU (A,B):
 
         print('pivo = ', max, 'linha do pivo = ', Lmax)        
         TorcarLinhas(A, Lmax, c)                    # Trocar linha do pivô para posiciona-la corretamente
-        TorcarLinhas(B, Lmax, c)                    # Realizar mesma troca no matriz B               
+        TorcarLinhas(B, Lmax, c)                    # Realizar mesma troca no matriz B  
+        TorcarLinhas(L, Lmax, c)                    # Realizar mesma troca no matriz L              
         pp.pprint(A)
 
         for i in range (len(A)-c-1):            # eliminação de gauss
@@ -61,8 +62,11 @@ def LU (A,B):
                 print('calculando : ', A[i+1+c][j], '- (', coef, ') * ', A[c][j], ' = ', A[i+1+c][j] - coef * A[c][j])
                 A[i+1+c][j] = A[i+1+c][j] - coef * A[c][j]
             
+        print('matriz a ')
         pp.pprint(A)
+        print('matriz l ')
         pp.pprint(L)
+        print('matriz b ')
         pp.pprint(B)
         
  
@@ -75,10 +79,9 @@ def LU (A,B):
 
 
 if __name__ == "__main__":
-    #A = [[2, 1, 1, 0], [4, 3, 3, 1], [8, 7, 9, 5], [6, 7, 9, 8]]
-    #B = [1, 2, 4, 5]
+    A = [[2, 1, 1, 0], [4, 3, 3, 1], [8, 7, 9, 5], [6, 7, 9, 8]]
+    B = [1, 2, 4, 5]
 
 
-    A = [[1,-3,2],[-2,8,-1],[4,-6,5]]
-    B = [11,-15,29]
+
     LU (A,B)
