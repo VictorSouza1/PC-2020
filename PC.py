@@ -36,7 +36,7 @@ ls = 3
 
 
 
-def InicializaMatriz ():
+def InicializaMatrizL ():
     global A
     global L
     M = []
@@ -45,10 +45,8 @@ def InicializaMatriz ():
         linha = []
         for j in range (len(A[0])):
             linha.append(0)
-        
         L.append(linha)
-        print(L)
-    return 
+    return
 
 def PreencherDiagonalPrincipalCom1s (M):
     for i in range (len(M)):
@@ -57,108 +55,37 @@ def PreencherDiagonalPrincipalCom1s (M):
                 M[i][j] = 1
     return
 
-def TorcarLinhasL (l1, l2):
-    global L
-    print (L)
-    for i in range (len(L)):
-        temp = parserAcesso(l1, i)
-        parserEscrita(l1, i, parserAcesso(l2,i))
-        parserEscrita(l2, i, temp)
-    return 
 
-def parseTrocarLinhas (l1, l2):
+
+def parseTrocarLinhas (M, l1, l2):
     global A
     for i in range (len(A)):
-        temp = parserAcesso(l1, i)
-        parserEscrita(l1, i, parserAcesso(l2,i))
-        parserEscrita(l2, i, temp)
+        temp = parserAcesso(M, l1, i)
+        parserEscrita(M,l1, i, parserAcesso(M, l2,i))
+        parserEscrita(M, l2, i, temp)
         
 
-def parserAcesso (m, n):
+def parserAcesso (M , m, n):
     global li
-    global A
+
     if (n - m + li) < 0:
         return 0
-    if (n - m + li) >= len(A[0]):
+    if (n - m + li) >= len(M[0]):
         return 0
-    return A[m][n - m + li] 
+    return M[m][n - m + li] 
     
 
 
-def parserEscrita (m, n, valor):
+def parserEscrita (M , m, n, valor):
     global li
-    global A
     if (n - m + li) < 0:
         return
-    if (n - m + li) >= len(A[0]):
+    if (n - m + li) >= len(M[0]):
         return
-    A[m][n - m + li] = valor
+    M[m][n - m + li] = valor
 
     return
 
-def parserEscritaL (m, n, valor):
-    global li
-    global L
-    if (n - m + li) < 0:
-        return
-    if (n - m + li) >= len(L[0]):
-        return
-    L[m][n - m + li] = valor
-    return
-
-
-def LU (A,B):
-    pp = pprint.PrettyPrinter()
-    L = InicializaMatriz(len(A))
-
-
-    #pp.pprint(A)
-
-
-    for c in range (len(A)):
-        
-        max = abs(A[c][c])                           #pivô
-        Lmax = c
-        for l in range (len(A)-c):              # Achar o menor elemento que pode ser um pivô
-            if abs(A[l+c][c]) > max:
-                Lmax = l+c
-                max = A[l+c][c]
-
-        print ('matiz A antes da troca')
-        pp.pprint(A)
-        print('pivo = ', max, 'linha do pivo = ', Lmax)        
-        TorcarLinhas(A, Lmax, c)                    # Trocar linha do pivô para posiciona-la corretamente
-        TorcarLinhas(B, Lmax, c)                    # Realizar mesma troca no matriz B  
-        TorcarLinhas(L, Lmax, c)                    # Realizar mesma troca no matriz L              
-        print ('matiz A depois da troca')
-        pp.pprint(A)
-
-        for i in range (len(A)-c-1):            #  Fatorçao LU
-            coef = A[i+1+c][c] / A[c][c]
-            L[i+1+c][c] = coef  
-            print ("Adicionando o coeficiente",coef, " na posicao ", i+1+c, ",", c)
-            print("cada passo de L : ")
-            pp.pprint(L)
-                            # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
-            #print('coeficiente = ', A[i+1+c][c], '/', A[c][c], '=', coef)
-            
-            for j in range (len(A)):            # zerando/operando sobre uma linha
-                #print('calculando : ', A[i+1+c][j], '- (', coef, ') * ', A[c][j], ' = ', A[i+1+c][j] - coef * A[c][j])
-                A[i+1+c][j] = A[i+1+c][j] - coef * A[c][j]
-
-        
- 
-
-    #PreencherDiagonalPrincipalCom1s(L)
-
-    print('matriz a ')
-    pp.pprint(A)
-    print('matriz l ')
-    pp.pprint(L)
-    print('matriz b ')
-    pp.pprint(B)
-    
-    return
 
 def LUnova ():
     global A
@@ -167,34 +94,34 @@ def LUnova ():
     global ls
 
     pp = pprint.PrettyPrinter()
-    InicializaMatriz()
-    print (L)
+    InicializaMatrizL()
+    print ("l é igual a ", L)
 
     for c in range (len(A)):
         
-        max = abs(parserAcesso(c , c))                          #pivô
+        max = abs(parserAcesso(A, c , c))                          #pivô
         Lmax = c
         
         for l in range (len(A)-c):              # Achar o menor elemento que pode ser um pivô
-            if abs(parserAcesso(l+c, c)) > max:
+            if abs(parserAcesso(A, l+c, c)) > max:
                 Lmax = l+c
-                max = parserAcesso(l+c,c)
+                max = parserAcesso(A, l+c,c)
 
         #print('pivo = ', max, 'linha do pivo = ', Lmax)        
         
-        parseTrocarLinhas(Lmax, c)                    # Trocar linha do pivô para posiciona-la corretamente
+        parseTrocarLinhas(A, Lmax, c)                    # Trocar linha do pivô para posiciona-la corretamente
         #print ('primeiro A ficou ')
         #pp.pprint(A)
         #TorcarLinhas(B, Lmax, c)                    # Realizar mesma troca no matriz B  
         
-        TorcarLinhasL(Lmax, c)                    # Realizar mesma troca no matriz L              
+        parseTrocarLinhas(L, Lmax, c)                    # Realizar mesma troca no matriz L              
      
         #pp.pprint(A)
         
         
         for i in range (len(A)-c-1):            #  Fatorçao LU
-            coef = parserAcesso(i+1+c, c) / parserAcesso(c, c)
-            parserEscritaL (i+1+c, c, coef)                 # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
+            coef = parserAcesso(A, i+1+c, c) / parserAcesso(A, c, c)
+            parserEscrita(L, i+1+c, c, coef)             # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
             print ("Adicionando o coeficiente na posicao ", i+1+c, ",", c)
             print("cada passo de L : ")
             pp.pprint(L)
@@ -202,12 +129,12 @@ def LUnova ():
             
             for j in range (len(A)):            # zerando/operando sobre uma linha
                 #print('calculando : ', parserAcesso(i+1+c, j) , '- (', coef, ') * ',parserAcesso(c,j) , ' = ', parserAcesso(i+1+c, j) - coef * parserAcesso(c,j))
-                parserEscrita(i+1+c,j, parserAcesso(i+1+c, j) - coef * parserAcesso(c,j))
+                parserEscrita(A , i+1+c,j, parserAcesso(A , i+1+c, j) - coef * parserAcesso(A , c,j))
             
         
  
 
-    PreencherDiagonalPrincipalCom1s(L)
+    #PreencherDiagonalPrincipalCom1s(L)
 
     print('matriz a ')
     pp.pprint(A)
