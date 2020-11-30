@@ -74,7 +74,7 @@ def parserEscrita (m, n, valor):
 
     return
 
-def LUnova ():
+def LU ():
     global A
     global li
     global ls
@@ -117,6 +117,6 @@ def LUnova ():
 
 if __name__ == "__main__":
 
-    LUnova ()
+    LU ()
     
 
