@@ -1,5 +1,7 @@
 import pprint
 
+L = []
+
 A2 = [[10,5,6,7,0,0,0,0,0,0,0,0],
 	[20,20,21,14,4,0,0,0,0,0,0,0],
 	[90,65,82,64,10,3,0,0,0,0,0,0],
@@ -34,15 +36,19 @@ ls = 3
 
 
 
-def InicializaMatriz (n):
+def InicializaMatriz ():
+    global A
+    global L
     M = []
     linha = []
-    for i in range (n) :
+    for i in range (len(A)) :
         linha = []
-        for j in range (n):
+        for j in range (len(A[0])):
             linha.append(0)
-        M.append(linha)
-    return M
+        
+        L.append(linha)
+        print(L)
+    return 
 
 def PreencherDiagonalPrincipalCom1s (M):
     for i in range (len(M)):
@@ -51,10 +57,13 @@ def PreencherDiagonalPrincipalCom1s (M):
                 M[i][j] = 1
     return
 
-def TorcarLinhas (M, l1, l2):
-    temp = M [l1]
-    M[l1] = M [l2]
-    M[l2] = temp
+def TorcarLinhasL (l1, l2):
+    global L
+    print (L)
+    for i in range (len(L)):
+        temp = parserAcesso(l1, i)
+        parserEscrita(l1, i, parserAcesso(l2,i))
+        parserEscrita(l2, i, temp)
     return 
 
 def parseTrocarLinhas (l1, l2):
@@ -86,6 +95,17 @@ def parserEscrita (m, n, valor):
     A[m][n - m + li] = valor
 
     return
+
+def parserEscritaL (m, n, valor):
+    global li
+    global L
+    if (n - m + li) < 0:
+        return
+    if (n - m + li) >= len(L[0]):
+        return
+    L[m][n - m + li] = valor
+    return
+
 
 def LU (A,B):
     pp = pprint.PrettyPrinter()
@@ -129,7 +149,7 @@ def LU (A,B):
         
  
 
-    PreencherDiagonalPrincipalCom1s(L)
+    #PreencherDiagonalPrincipalCom1s(L)
 
     print('matriz a ')
     pp.pprint(A)
@@ -142,11 +162,13 @@ def LU (A,B):
 
 def LUnova ():
     global A
+    global L
     global li
     global ls
 
     pp = pprint.PrettyPrinter()
-    L = InicializaMatriz(len(A))
+    InicializaMatriz()
+    print (L)
 
     for c in range (len(A)):
         
@@ -165,14 +187,14 @@ def LUnova ():
         #pp.pprint(A)
         #TorcarLinhas(B, Lmax, c)                    # Realizar mesma troca no matriz B  
         
-        TorcarLinhas(L, Lmax, c)                    # Realizar mesma troca no matriz L              
+        TorcarLinhasL(Lmax, c)                    # Realizar mesma troca no matriz L              
      
         #pp.pprint(A)
         
         
         for i in range (len(A)-c-1):            #  Fatorçao LU
             coef = parserAcesso(i+1+c, c) / parserAcesso(c, c)
-            L[i+1+c][c] = coef                  # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
+            parserEscritaL (i+1+c, c, coef)                 # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
             print ("Adicionando o coeficiente na posicao ", i+1+c, ",", c)
             print("cada passo de L : ")
             pp.pprint(L)
