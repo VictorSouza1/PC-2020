@@ -97,7 +97,7 @@ def LU (A,B):
 
     for c in range (len(A)):
         
-        max = A[c][c]                           #pivô
+        max = abs(A[c][c])                           #pivô
         Lmax = c
         for l in range (len(A)-c):              # Achar o menor elemento que pode ser um pivô
             if abs(A[l+c][c]) > max:
@@ -114,7 +114,7 @@ def LU (A,B):
         pp.pprint(A)
 
         for i in range (len(A)-c-1):            #  Fatorçao LU
-            coef = round(A[i+1+c][c] / A[c][c], 2)
+            coef = A[i+1+c][c] / A[c][c]
             L[i+1+c][c] = coef  
             print ("Adicionando o coeficiente",coef, " na posicao ", i+1+c, ",", c)
             print("cada passo de L : ")
@@ -124,7 +124,7 @@ def LU (A,B):
             
             for j in range (len(A)):            # zerando/operando sobre uma linha
                 #print('calculando : ', A[i+1+c][j], '- (', coef, ') * ', A[c][j], ' = ', A[i+1+c][j] - coef * A[c][j])
-                A[i+1+c][j] = round(A[i+1+c][j] - coef * A[c][j], 2)
+                A[i+1+c][j] = A[i+1+c][j] - coef * A[c][j]
 
         
  
@@ -150,7 +150,7 @@ def LUnova ():
 
     for c in range (len(A)):
         
-        max = parserAcesso(c , c)                          #pivô
+        max = abs(parserAcesso(c , c))                          #pivô
         Lmax = c
         
         for l in range (len(A)-c):              # Achar o menor elemento que pode ser um pivô
@@ -204,6 +204,11 @@ if __name__ == "__main__":
     #A =[[1,-3,2], [-2, 8, -1], [4, -6, 5]]
     #B = [11, -15, 29]
 
-    LUnova ()
-
-    #LU(A,B)
+    #A= [[2,1,5], [4,4,-4], [1,3,1]]
+    #B = [11, -15, 29]
+    
+    A = [[-8,1,-2],[-3,-1,7],[2,-6,-1]] 
+    B = [-20,-38,-34]
+    #LUnova ()
+    
+    LU(A,B)
