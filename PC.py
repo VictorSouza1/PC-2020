@@ -171,7 +171,7 @@ def LUnova ():
         
         
         for i in range (len(A)-c-1):            #  Fatorçao LU
-            coef = round(parserAcesso(i+1+c, c) / parserAcesso(c, c), 2)
+            coef = parserAcesso(i+1+c, c) / parserAcesso(c, c)
             L[i+1+c][c] = coef                  # adicionando os elementos da matriz L (matriz de coeficientes) ja na posição correta
             print ("Adicionando o coeficiente na posicao ", i+1+c, ",", c)
             print("cada passo de L : ")
@@ -180,7 +180,7 @@ def LUnova ():
             
             for j in range (len(A)):            # zerando/operando sobre uma linha
                 #print('calculando : ', parserAcesso(i+1+c, j) , '- (', coef, ') * ',parserAcesso(c,j) , ' = ', parserAcesso(i+1+c, j) - coef * parserAcesso(c,j))
-                parserEscrita(i+1+c,j, round((parserAcesso(i+1+c, j) - coef * parserAcesso(c,j)),2)) 
+                parserEscrita(i+1+c,j, parserAcesso(i+1+c, j) - coef * parserAcesso(c,j))
             
         
  
@@ -207,8 +207,8 @@ if __name__ == "__main__":
     #A= [[2,1,5], [4,4,-4], [1,3,1]]
     #B = [11, -15, 29]
     
-    A = [[-8,1,-2],[-3,-1,7],[2,-6,-1]] 
-    B = [-20,-38,-34]
-    #LUnova ()
+    #A = [[-8,1,-2],[-3,-1,7],[2,-6,-1]] 
+    #B = [-20,-38,-34]
+    LUnova ()
     
-    LU(A,B)
+    #LU(A2,B)
